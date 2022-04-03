@@ -25,6 +25,7 @@ public class DropRemoverHandler {
     private static List<DroppedItem> droppedItems;
 
     public static void initialize(DropRemoverPlugin plugin) {
+
         //CONFIGURATION
         DropRemoverConfiguration.initialize(plugin);
         DropRemoverHandler.loadValues();

@@ -1,5 +1,5 @@
-name: 'DropRemover'
-author: 'Hakan Kargın'
+name: 'hDropRemover'
+author: 'Hakan (Hakan#2584)'
+depend: [hCore]
 version: 1.5.1
-api-version: 1.16
 main: com.hakan.dropremover.DropRemoverPlugin

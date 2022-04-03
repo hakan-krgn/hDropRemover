@@ -5,7 +5,7 @@
     <parent>
         <artifactId>hDropRemover</artifactId>
         <groupId>com.hakan</groupId>
-        <version>0.0.1</version>
+        <version>1.5.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -35,7 +35,7 @@
             <groupId>com.github.hakan-krgn.hCore</groupId>
             <artifactId>bukkit</artifactId>
             <version>0.0.9</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
