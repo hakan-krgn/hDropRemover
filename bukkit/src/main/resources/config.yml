@@ -1,0 +1,8 @@
+settings:
+  remove-time: 15
+  effect:
+    enabled: true
+    type: 'FLAME'
+  hologram:
+    enabled: true
+    text: '&c[&4%time%&c] &f%material% &8(x%amount%)'
