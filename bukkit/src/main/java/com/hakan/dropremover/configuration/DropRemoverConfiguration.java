@@ -28,7 +28,7 @@ public class DropRemoverConfiguration {
     }
 
     public static DropRemoverConfiguration getByPath(String path) {
-        return DropRemoverConfiguration.findByPath(path).orElseThrow(() -> new NullPointerException("claim configuration couldn't for path: " + path));
+        return DropRemoverConfiguration.findByPath(path).orElseThrow(() -> new NullPointerException("drop remover configuration couldn't for path: " + path));
     }
 
 
