@@ -1,15 +1,17 @@
 # hDropRemover
 
-
 ## Description
+
 Remove all drops when you drop your items within the time you set and clear with effect.
 
 ## For developers
+
 If you need to use API of hDropRemover, you can use maven or gradle from jitpack.
 
 ### Maven
 
 ```xml
+
 <repository>
     <id>jitpack.io</id>
     <url>https://jitpack.io</url>
