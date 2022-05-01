@@ -11,6 +11,7 @@ This plugin works with [hCore](https://github.com/hakan-krgn/hCore).
 If you need to use API of hDropRemover, you can use maven or gradle from jitpack.
 
 ### Maven
+
 ```xml
 <repository>
     <id>jitpack.io</id>
@@ -20,17 +21,18 @@ If you need to use API of hDropRemover, you can use maven or gradle from jitpack
 <dependency>
     <groupId>com.github.hakan-krgn.hDropRemover</groupId>
     <artifactId>bukkit</artifactId>
-    <version>1.5.3</version>
+    <version>1.5.4</version>
 </dependency>
 ```
 
 ### Gradle
+
 ```gradle
 repositories {
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.github.hakan-krgn.hDropRemover:bukkit:1.5.3'
+    implementation 'com.github.hakan-krgn.hDropRemover:bukkit:1.5.4'
 }
 ```
