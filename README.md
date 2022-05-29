@@ -20,7 +20,7 @@ If you need to use API of hDropRemover, you can use maven or gradle from jitpack
 <dependency>
     <groupId>com.github.hakan-krgn.hDropRemover</groupId>
     <artifactId>bukkit</artifactId>
-    <version>1.5.5</version>
+    <version>1.5.6</version>
 </dependency>
 ```
 
@@ -32,6 +32,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.hakan-krgn.hDropRemover:bukkit:1.5.5'
+    implementation 'com.github.hakan-krgn.hDropRemover:bukkit:1.5.6'
 }
 ```
