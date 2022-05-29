@@ -3,7 +3,7 @@ package com.hakan.dropremover.configuration;
 import com.hakan.core.utils.yaml.HYaml;
 import com.hakan.dropremover.DropRemoverPlugin;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -15,8 +15,9 @@ public class DropRemoverConfiguration {
     private final static Map<String, DropRemoverConfiguration> configurations = new HashMap<>();
 
     public static void initialize(DropRemoverPlugin plugin) {
-        Collections.singletonList(
-                "config.yml"
+        Arrays.asList(
+                "config.yml",
+                "items.yml"
         ).forEach(path -> configurations.put(path, new DropRemoverConfiguration(HYaml.create(plugin, path, path))));
 
         CONFIG = configurations.get("config.yml");

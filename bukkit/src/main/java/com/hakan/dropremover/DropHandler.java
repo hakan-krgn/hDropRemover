@@ -6,11 +6,16 @@ import com.hakan.dropremover.commands.DropCommand;
 import com.hakan.dropremover.configuration.DropRemoverConfiguration;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class DropHandler {
 
@@ -21,6 +26,7 @@ public class DropHandler {
     public static boolean HOLOGRAM_ENABLED;
 
     private static List<DroppedItem> droppedItems;
+    private static Map<Material, String> itemNames;
 
     public static void initialize(DropRemoverPlugin plugin) {
 
@@ -31,6 +37,8 @@ public class DropHandler {
 
         //CACHE
         DropHandler.droppedItems = new ArrayList<>();
+        DropHandler.itemNames = new HashMap<>();
+        DropHandler.loadItems();
 
 
         //TASKS
@@ -69,11 +77,47 @@ public class DropHandler {
         return droppedItems;
     }
 
+    public static Map<Material, String> getItemNamesSafe() {
+        return new HashMap<>(itemNames);
+    }
+
+    public static Map<Material, String> getItemNames() {
+        return itemNames;
+    }
+
+    public static Optional<String> findNameByMaterial(Material material) {
+        return Optional.ofNullable(DropHandler.itemNames.get(material));
+    }
+
+    public static String getNameByMaterial(Material material) {
+        return findNameByMaterial(material).orElse(material.name());
+    }
+
     public static void loadValues() {
         REMOVE_TIME = DropRemoverConfiguration.CONFIG.get("settings.remove-time");
         EFFECT = DropRemoverConfiguration.CONFIG.get("settings.effect.type");
         EFFECT_ENABLED = DropRemoverConfiguration.CONFIG.get("settings.effect.enabled");
         HOLOGRAM_TEXT = ChatColor.translateAlternateColorCodes('&', DropRemoverConfiguration.CONFIG.get("settings.hologram.text"));
         HOLOGRAM_ENABLED = DropRemoverConfiguration.CONFIG.get("settings.hologram.enabled");
+    }
+
+    public static void loadItems() {
+        DropRemoverConfiguration configuration = DropRemoverConfiguration.getByPath("items.yml");
+        for (Material material : Material.values()) {
+            if (configuration.get(material.name()) == null) {
+                configuration.set(material.name(), material.name());
+            }
+        }
+
+        for (String type : configuration.get("", MemorySection.class).getKeys(false)) {
+            try {
+                Material material = Material.valueOf(type);
+                String name = configuration.get(type);
+                DropHandler.itemNames.put(material, name);
+            } catch (Exception e) {
+                configuration.set(type, null);
+            }
+        }
+        configuration.save();
     }
 }

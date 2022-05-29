@@ -25,6 +25,8 @@ public class DropCommand implements HCommandAdapter {
         DropRemoverConfiguration.getConfigurations().values()
                 .forEach(DropRemoverConfiguration::reload);
         DropHandler.loadValues();
+        DropHandler.loadItems();
+
         sender.sendMessage("has been reloaded.");
     }
 }

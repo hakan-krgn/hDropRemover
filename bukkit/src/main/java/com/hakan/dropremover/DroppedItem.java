@@ -31,8 +31,8 @@ public class DroppedItem {
 
     public void updateItem() {
         if (DropHandler.HOLOGRAM_ENABLED) {
-            String type = this.item.getItemStack().getType().name();
             String amount = this.item.getItemStack().getAmount() + "";
+            String type = DropHandler.getNameByMaterial(this.item.getItemStack().getType());
             String seconds = String.valueOf((int) Math.round((this.removeAt - System.currentTimeMillis()) / 1000.0));
 
             String customName = DropHandler.HOLOGRAM_TEXT
