@@ -1,28 +1,30 @@
 package com.hakan.dropremover.commands;
 
-import com.hakan.core.command.HCommandExecutor;
-import com.hakan.dropremover.DropRemoverHandler;
+import com.hakan.core.command.HCommandAdapter;
+import com.hakan.core.command.executors.base.BaseCommand;
+import com.hakan.core.command.executors.sub.SubCommand;
+import com.hakan.dropremover.DropHandler;
 import com.hakan.dropremover.configuration.DropRemoverConfiguration;
 import org.bukkit.command.CommandSender;
 
 import javax.annotation.Nonnull;
 
-public class DropCommand extends HCommandExecutor {
+@BaseCommand(
+        name = "hdropremover",
+        aliases = {"dropremover", "hdrops", "drops"},
+        usage = "/hdropremover <reload>"
+)
+public class DropCommand implements HCommandAdapter {
 
-    public DropCommand(@Nonnull String command, @Nonnull String... aliases) {
-        super(command, "hdropremover.reload", aliases);
-        super.subCommand("reload");
-        super.subCommand("yenile");
-    }
-
-    @Override
-    public void onCommand(@Nonnull CommandSender sender, @Nonnull String[] args) {
-        if (args.length == 1) {
-            if (args[0].equals("reload") || args[0].equals("yenile")) {
-                DropRemoverConfiguration.CONFIG.reload();
-                DropRemoverHandler.loadValues();
-                sender.sendMessage("has been reloaded.");
-            }
-        }
+    @SubCommand(
+            args = "reload",
+            permission = "hdropremover.reload",
+            permissionMessage = "§cYou don't have permission to reload the configuration!"
+    )
+    public void execute(@Nonnull CommandSender sender, @Nonnull String[] args) {
+        DropRemoverConfiguration.getConfigurations().values()
+                .forEach(DropRemoverConfiguration::reload);
+        DropHandler.loadValues();
+        sender.sendMessage("has been reloaded.");
     }
 }

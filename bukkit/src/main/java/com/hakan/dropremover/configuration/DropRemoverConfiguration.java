@@ -1,9 +1,12 @@
 package com.hakan.dropremover.configuration;
 
-import com.hakan.core.utils.HYaml;
+import com.hakan.core.utils.yaml.HYaml;
 import com.hakan.dropremover.DropRemoverPlugin;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @SuppressWarnings({"unchecked"})
 public class DropRemoverConfiguration {

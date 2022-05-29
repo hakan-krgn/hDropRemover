@@ -1,6 +1,5 @@
-package com.hakan.dropremover.item;
+package com.hakan.dropremover;
 
-import com.hakan.dropremover.DropRemoverHandler;
 import org.bukkit.entity.Item;
 
 public class DroppedItem {
@@ -27,16 +26,16 @@ public class DroppedItem {
 
     public void remove() {
         this.item.remove();
-        DropRemoverHandler.getDroppedItems().remove(this);
+        DropHandler.getDroppedItems().remove(this);
     }
 
     public void updateItem() {
-        if (DropRemoverHandler.HOLOGRAM_ENABLED) {
+        if (DropHandler.HOLOGRAM_ENABLED) {
             String type = this.item.getItemStack().getType().name();
             String amount = this.item.getItemStack().getAmount() + "";
             String seconds = String.valueOf((int) Math.round((this.removeAt - System.currentTimeMillis()) / 1000.0));
 
-            String customName = DropRemoverHandler.HOLOGRAM_TEXT
+            String customName = DropHandler.HOLOGRAM_TEXT
                     .replace("%material%", type)
                     .replace("%amount%", amount)
                     .replace("%time%", seconds);

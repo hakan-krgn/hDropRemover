@@ -1,20 +1,18 @@
 package com.hakan.dropremover;
 
 import com.hakan.core.HCore;
-import com.hakan.core.listener.HListenerAdapter;
 import com.hakan.core.particle.HParticle;
 import com.hakan.dropremover.commands.DropCommand;
 import com.hakan.dropremover.configuration.DropRemoverConfiguration;
-import com.hakan.dropremover.item.DroppedItem;
-import com.hakan.dropremover.listeners.DropItemListeners;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DropRemoverHandler {
+public class DropHandler {
 
     public static int REMOVE_TIME;
     public static String EFFECT;
@@ -28,16 +26,16 @@ public class DropRemoverHandler {
 
         //CONFIGURATION
         DropRemoverConfiguration.initialize(plugin);
-        DropRemoverHandler.loadValues();
+        DropHandler.loadValues();
 
 
         //CACHE
-        DropRemoverHandler.droppedItems = new ArrayList<>();
+        DropHandler.droppedItems = new ArrayList<>();
 
 
         //TASKS
         HCore.syncScheduler().every(20)
-                .run(() -> DropRemoverHandler.getDroppedItemsSafe().forEach(droppedItem -> {
+                .run(() -> DropHandler.getDroppedItemsSafe().forEach(droppedItem -> {
                     if (droppedItem.isRemoved()) {
                         droppedItem.remove();
                         return;
@@ -47,15 +45,20 @@ public class DropRemoverHandler {
                     if (droppedItem.canRemove()) {
                         Location location = droppedItem.getItem().getLocation();
                         HCore.playParticle(location.getWorld().getPlayers(), location,
-                                new HParticle(DropRemoverHandler.EFFECT, 20, new Vector(0.2, 0.2, 0.2)));
+                                new HParticle(DropHandler.EFFECT, 20, new Vector(0.2, 0.2, 0.2)));
                         droppedItem.remove();
                     }
                 }));
 
 
         //BUKKIT
-        HListenerAdapter.register(new DropItemListeners(plugin));
-        HCore.registerCommands(new DropCommand("hdropremover", "dropremover", "hdrops", "drops"));
+        HCore.registerCommands(new DropCommand());
+        HCore.registerEvent(PlayerDropItemEvent.class)
+                .consume(event -> {
+                    DroppedItem droppedItem = new DroppedItem(event.getItemDrop(), System.currentTimeMillis() + DropHandler.REMOVE_TIME * 1000L);
+                    droppedItem.updateItem();
+                    DropHandler.getDroppedItems().add(droppedItem);
+                });
     }
 
     public static List<DroppedItem> getDroppedItemsSafe() {

@@ -10,6 +10,6 @@ public class DropRemoverPlugin extends JavaPlugin {
     public void onEnable() {
         HCore.initialize(this);
         Metrics.initialize(this);
-        DropRemoverHandler.initialize(this);
+        DropHandler.initialize(this);
     }
 }
